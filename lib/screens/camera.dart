@@ -44,25 +44,26 @@ class _CameraScreenState extends State<CameraScreen> {
       print('Error taking picture: $e');
     }
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Take a Picture')),
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return CameraPreview(_controller);
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _takePicture,
-        child: const Icon(Icons.camera_alt),
-      ),
-    );
-  }
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(title: const Text('Take a Picture')),
+    body: FutureBuilder<void>(
+      future: _initializeControllerFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Center(  
+            child: CameraPreview(_controller),  // Camera is now centered
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: _takePicture,
+      child: const Icon(Icons.camera_alt),
+    ),
+  );
+}
 }
